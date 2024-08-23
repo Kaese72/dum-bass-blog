@@ -1,0 +1,98 @@
+article {
+    display: grid;
+    grid-template-columns: 1fr [start] minmax(0, 8.5in) [end] 1fr;
+}
+
+header {
+    display: grid;
+    grid-template-columns: 1fr [start] minmax(0, 8.5in) [end] 1fr;
+}
+
+header * {
+    grid-column: start / end;
+}
+
+footer {
+    display: grid;
+    grid-template-columns: 1fr [start] minmax(0, 8.5in) [end] 1fr;
+}
+
+footer * {
+    grid-column: start / end;
+}
+
+header>div.paperSheet {
+    display: grid;
+    grid-template-columns: [start] minmax(0, 2in) [introStart] minmax(0, 4.5in) [refStart] minmax(0, 2in) [end];
+}
+
+div.blogPicture {
+    grid-column: start / introStart;
+}
+
+div.blogIntro {
+    grid-column: introStart / refStart;
+}
+
+div.blogReferences {
+    grid-column: refStart / end;
+    border: 3px;
+    border-color: black;
+    border-style: dotted;
+}
+
+.blogReferences img {
+    height: 1.0rem;
+    bottom: 0px
+}
+
+div.paperSheet {
+    box-shadow: 5px 5px 5px 5px gray;
+    margin-bottom: 30px;
+}
+
+#blogPostContainer div.papersheet {
+    padding: 30px;
+}
+
+
+#blogPostContainer article * {
+    grid-column: start / end;
+}
+
+h2,
+p {
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+article h1 {
+    font: 700 2.0rem/1.2 …;
+    color: hsl(000, 000%, 33%);
+}
+
+article h2 {
+    font: 400 1.5rem/1.2 …;
+    color: hsl(000, 000%, 33%);
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+article code {
+    color: darkgoldenrod;
+}
+
+time {
+    font: 700 1.0rem/1.2 …;
+    color: hsl(250, 100%, 83%);
+}
+
+h3 {
+    font: 700 1.0rem/1.2 …;
+    color: hsl(250, 100%, 67%);
+}
+
+p {
+    font: 400 1.0rem/1.5 …;
+    color: hsl(000, 000%, 33%);
+}

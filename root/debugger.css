@@ -1,0 +1,7 @@
+/* Debugger */
+
+body * {
+    color: hsla(000, 100%, 100%, 0.88) !important;
+    background: hsla(210, 100%, 50%, 0.33) !important;
+    outline: 0.25rem solid hsla(0, 0%, 100%, 0.5) !important;
+}
