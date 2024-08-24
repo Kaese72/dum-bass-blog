@@ -44,10 +44,50 @@ learn webdesign since I effectively suck at it (at the time of writing, but prob
 
 ## The Journey
 
+### The "first" version of the blog
+
 The first few iterations of the blogs lived solely on my computer and are not worth showcasing. Keep in mind that the
-only successful webdesign I had done before was a small project in grade school, so when I call the blog `he best webdesign in my life`,
+only successful webdesign I had done before was a small project in grade school, so when I call the blog `the best webdesign in my life`,
 you need to have appropriate expectations. 
 
 Anyway, the "first" iteraction looked like "this"... and I realize my current solution does not support inputing pictures in the blog post... Instead of solving the problem I have elected to ignore it and add the capability later.
 
+### Deployment
 
+There is only a few couple of things I care about when deploying,
+
+* GitOps way of working
+* Few steps to update blog
+
+Two options seemed reasonable to me
+
+* Proxy against github
+* Build and deploy the entire blog on Kubernetes
+
+The second option I knew how to do, but I realize in retrospect that the first would
+probably have been easier to work with over time since I could have pointed the proxy
+towards the master branch in Github. After some experimentation I could not figure out 
+an easy way to setup the proxy because accessing the raw files from 
+`raw.githubusercontent.com` did not return the content type. This can be resolved, there are
+services that do it that I do not want to pay for and I wanted to move forward 
+so I opted for the second option. 
+
+I already have a K3s single node installation running on a virtual machine in Azure, so its
+just a matter of deploying building and deplying the blog there. This will be done in two
+easy steps
+
+1. [Build the blog](https://github.com/Kaese72/dum-bass-blog/blob/3f4df428997a046f1dcc3a468a97ce069795fc53/.github/workflows/build-the-blog.yml)
+   1. Via [Dockerfile](https://github.com/Kaese72/dum-bass-blog/blob/3f4df428997a046f1dcc3a468a97ce069795fc53/Dockerfile)
+2. [Deploy the blog](https://github.com/Kaese72/dum-bass-blog/blob/3f4df428997a046f1dcc3a468a97ce069795fc53/Deployment.yaml)
+
+Shortly before this project started, my home lab, [rectal computer](https://www.youtube.com/watch?v=y-bYSC6OT6s) had broken down because of
+a disk failure. No one backs up their home labs, right? I sure had not. Coincidentally, the home lab is also the machine I had Argo CD running on.
+I popped in another disk I had laying around (which will surely break down soon too), 
+installed [K3s](https://k3s.io/), 
+deployed [Argo CD](https://argo-cd.readthedocs.io/en/stable/getting_started/), 
+and [added the Azure K3s cluster](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-management/#adding-a-cluster). 
+
+We're back in business!
+
+Letting Argo CD handle the deployment is very simple in my case. There are no secrets in the deployment (yet... foreshadowing)
+and the Git repository the blog is maintained in is public. 
