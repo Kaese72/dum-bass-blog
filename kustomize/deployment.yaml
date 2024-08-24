@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: blog
-        image: ghcr.io/kaese72/dum-bass-blog-api:master
+        image: ghcr.io/kaese72/dum-bass-blog:master
         ports:
         - containerPort: 80
 ---
