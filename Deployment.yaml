@@ -1,7 +1,13 @@
 ---
-Kind: Deployment
-apiVersion: apps/v1
+apiVersion: v1
+kind: Namespace
 metadata:
+  name: dum-bass-blog
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: dum-bass-blog
   name: blog
   labels:
     app: blog
@@ -17,13 +23,14 @@ spec:
     spec:
       containers:
       - name: blog
-        image: blog:latest
+        image: ghcr.io/kaese72/dum-bass-blog-api:master
         ports:
         - containerPort: 80
 ---
-Kind: Service
 apiVersion: v1
+kind: Service
 metadata:
+  namespace: dum-bass-blog
   name: blog
   labels:
     app: blog
@@ -34,15 +41,21 @@ spec:
   selector:
     app: blog
 ---
-Kind: Ingress
+kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
+  namespace: dum-bass-blog
   name: blog
   labels:
     app: blog
 spec:
   rules:
-  - host: blog.huemie.space
-    http:
+  - http:
       paths:
-        
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: blog
+              port:
+                number: 80

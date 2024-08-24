@@ -96,3 +96,8 @@ p {
     font: 400 1.0rem/1.5 …;
     color: hsl(000, 000%, 33%);
 }
+
+.blogPicture img {
+    width: 100%;
+    height: auto;
+}
