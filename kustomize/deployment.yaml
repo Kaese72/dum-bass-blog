@@ -1,4 +1,19 @@
 ---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: charliegen@hotmail.se
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - http01:
+        ingress:
+          class: traefik
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -40,9 +55,12 @@ metadata:
   name: blog
   labels:
     app: blog
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   rules:
-  - http:
+  - host: blog.kaese.space
+    http:
       paths:
         - path: /
           pathType: Prefix
@@ -51,3 +69,7 @@ spec:
               name: blog
               port:
                 number: 80
+  tls:
+  - hosts:
+    - blog.kaese.space
+    secretName: letsencrypt-prod

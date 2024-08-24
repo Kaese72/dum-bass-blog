@@ -91,3 +91,25 @@ We're back in business!
 
 Letting Argo CD handle the deployment is very simple in my case. There are no secrets in the deployment (yet... foreshadowing)
 and the Git repository the blog is maintained in is public. 
+
+A few clicks and the blog is deployed. An old version containing half a blog post... but it is deployed on
+the internet for everyone to see. Thank god I have no shame.
+
+A couple of problems present themselves at this point. 
+
+* The blog occupies the entire ingress in the Azure K3s cluster
+* There is no valid TLS certificate
+* The blog looks like crap
+* The blog is running an outdated version
+
+The TLS certificate is the only thing that is worth fixing at this point in time.
+
+I have used [Let's Encrypt](https://letsencrypt.org/) before. I plan on using Let's Encrypt again. 
+However, before I can do that I need to make the service accessible through something more interesting
+than an IP address. 
+
+I tried using Azure domain name services but was told my account did not have 
+permission to use that service. Off to namecheap I go and buy `kaese.space` and assign `blog.kaese.space`
+to the IP in Azure. 
+
+Back to TLS. Let's Encrypt is a supported `CertIssuer` for `cert-manager` in K8s. I followed a [blog post](https://dev.to/ileriayo/adding-free-ssltls-on-kubernetes-using-certmanager-and-letsencrypt-a1l) and deployed a certificate via Let's Encrypt. 
