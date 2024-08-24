@@ -1,7 +1,7 @@
 # Building the blog
 
 I have a lot of stupid ideas... I like to think about them as misunderstood pieces of art, not because they have
-any particular value, but because my they are a way for me to express myself and entertain the people around me. 
+any particular value, but because my they are a way for me to express myself and entertain the people around me.
 
 Some of these ideas are just thought experiements, like `Umami Lies`, but others are quite practical and arguably useful
 for someone with to much time on their hands, like `A practical implementation of "download more RAM"`.
@@ -35,12 +35,12 @@ to thing about it at all, and instead just wing it. There are a couple of things
 
 ### The design
 
-In retrospect I realize that to anyone who visits the blog it will be immediately apparent that I am not a 
-UI guy. I am a backend and script guy, not visuals and art. 
+In retrospect I realize that to anyone who visits the blog it will be immediately apparent that I am not a
+UI guy. I am a backend and script guy, not visuals and art.
 
 I wanted the blog to have the look and feel of some kind of technical report, with a front page, table of contents,
 sections, etc. I could have just create a word document and upload a PDF... but that would be too easy. I also want to
-learn webdesign since I effectively suck at it (at the time of writing, but probably still too). 
+learn webdesign since I effectively suck at it (at the time of writing, but probably still too).
 
 ## The Journey
 
@@ -48,7 +48,7 @@ learn webdesign since I effectively suck at it (at the time of writing, but prob
 
 The first few iterations of the blogs lived solely on my computer and are not worth showcasing. Keep in mind that the
 only successful webdesign I had done before was a small project in grade school, so when I call the blog `the best webdesign in my life`,
-you need to have appropriate expectations. 
+you need to have appropriate expectations.
 
 Anyway, the "first" iteraction looked like "this"... and I realize my current solution does not support inputing pictures in the blog post... Instead of solving the problem I have elected to ignore it and add the capability later.
 
@@ -66,11 +66,11 @@ Two options seemed reasonable to me
 
 The second option I knew how to do, but I realize in retrospect that the first would
 probably have been easier to work with over time since I could have pointed the proxy
-towards the master branch in Github. After some experimentation I could not figure out 
-an easy way to setup the proxy because accessing the raw files from 
+towards the master branch in Github. After some experimentation I could not figure out
+an easy way to setup the proxy because accessing the raw files from
 `raw.githubusercontent.com` did not return the content type. This can be resolved, there are
-services that do it that I do not want to pay for and I wanted to move forward 
-so I opted for the second option. 
+services that do it that I do not want to pay for and I wanted to move forward
+so I opted for the second option.
 
 I already have a K3s single node installation running on a virtual machine in Azure, so its
 just a matter of deploying building and deplying the blog there. This will be done in two
@@ -82,20 +82,20 @@ easy steps
 
 Shortly before this project started, my home lab, [rectal computer](https://www.youtube.com/watch?v=y-bYSC6OT6s) had broken down because of
 a disk failure. No one backs up their home labs, right? I sure had not. Coincidentally, the home lab is also the machine I had Argo CD running on.
-I popped in another disk I had laying around (which will surely break down soon too), 
-installed [K3s](https://k3s.io/), 
-deployed [Argo CD](https://argo-cd.readthedocs.io/en/stable/getting_started/), 
-and [added the Azure K3s cluster](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-management/#adding-a-cluster). 
+I popped in another disk I had laying around (which will surely break down soon too),
+installed [K3s](https://k3s.io/),
+deployed [Argo CD](https://argo-cd.readthedocs.io/en/stable/getting_started/),
+and [added the Azure K3s cluster](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-management/#adding-a-cluster).
 
 We're back in business!
 
 Letting Argo CD handle the deployment is very simple in my case. There are no secrets in the deployment (yet... foreshadowing)
-and the Git repository the blog is maintained in is public. 
+and the Git repository the blog is maintained in is public.
 
 A few clicks and the blog is deployed. An old version containing half a blog post... but it is deployed on
 the internet for everyone to see. Thank god I have no shame.
 
-A couple of problems present themselves at this point. 
+A couple of problems present themselves at this point.
 
 * The blog occupies the entire ingress in the Azure K3s cluster
 * There is no valid TLS certificate
@@ -104,12 +104,28 @@ A couple of problems present themselves at this point.
 
 The TLS certificate is the only thing that is worth fixing at this point in time.
 
-I have used [Let's Encrypt](https://letsencrypt.org/) before. I plan on using Let's Encrypt again. 
+I have used [Let's Encrypt](https://letsencrypt.org/) before. I plan on using Let's Encrypt again.
 However, before I can do that I need to make the service accessible through something more interesting
-than an IP address. 
+than an IP address.
 
-I tried using Azure domain name services but was told my account did not have 
+I tried using Azure domain name services but was told my account did not have
 permission to use that service. Off to namecheap I go and buy `kaese.space` and assign `blog.kaese.space`
-to the IP in Azure. 
+to the IP in Azure.
 
-Back to TLS. Let's Encrypt is a supported `CertIssuer` for `cert-manager` in K8s. I followed a [blog post](https://dev.to/ileriayo/adding-free-ssltls-on-kubernetes-using-certmanager-and-letsencrypt-a1l) and deployed a certificate via Let's Encrypt. 
+Back to TLS. Let's Encrypt is a supported `CertIssuer` for `cert-manager` in K8s. I followed a [blog post](https://dev.to/ileriayo/adding-free-ssltls-on-kubernetes-using-certmanager-and-letsencrypt-a1l) and deployed a certificate via Let's Encrypt.
+The blog is a little old so it did not work because of deprecated APIs and stuff. Deploying the latest
+version (`v1.15.3`) made it work.
+
+So, the current situation is,
+
+* The blog is up and running
+* The blog post is unfinished but published
+* The traffic is encrypted
+
+I reckon its time to finish this blog post and push it for the world to see.
+
+## Conclusion
+
+Writing a blog is hard. Especially when you need to create the infrastructure to run it.
+
+//Calle
