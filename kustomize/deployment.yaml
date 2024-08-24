@@ -1,13 +1,7 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: dum-bass-blog
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: dum-bass-blog
   name: blog
   labels:
     app: blog
@@ -30,7 +24,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: dum-bass-blog
   name: blog
   labels:
     app: blog
@@ -44,7 +37,6 @@ spec:
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
-  namespace: dum-bass-blog
   name: blog
   labels:
     app: blog
