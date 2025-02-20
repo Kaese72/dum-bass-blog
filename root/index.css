@@ -101,3 +101,12 @@ p {
     width: 100%;
     height: auto;
 }
+
+#navigation {
+    grid-column: introStart / refStart;
+}
+
+#navigation a {
+    display: inline-block;
+    padding: 0.5rem;
+}
