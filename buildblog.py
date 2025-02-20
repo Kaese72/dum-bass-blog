@@ -3,6 +3,8 @@
 import argparse
 import dataclasses
 import os
+import shutil
+import sys
 import time
 import markdown
 import json
@@ -89,6 +91,20 @@ def main(destination_folder: str) -> None:
             os.mkdir(f"{destination_folder}/{blog.folder}")
         except FileExistsError:
             pass
+        try:
+            resources = os.listdir(f"{blog.folder}/resources")
+            try:
+                os.mkdir(f"{destination_folder}/{blog.folder}/resources/")
+            except FileExistsError:
+                pass
+        except FileNotFoundError:
+            pass
+        else:
+            for resource_file in resources:
+                shutil.copy(
+                    f"{blog.folder}/resources/{resource_file}",
+                    f"{destination_folder}/{blog.folder}/resources/{resource_file}",
+                )
         with open(
             f"{destination_folder}/{blog.folder}/index.html", "w", encoding="utf-8"
         ) as file:

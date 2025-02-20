@@ -2,5 +2,9 @@
     {
         "title": "Building the blog",
         "folder": "blog.buildingtheblog"
+    },
+    {
+        "title": "Expanding the blog",
+        "folder": "blog.expandingtheblog"
     }
 ]

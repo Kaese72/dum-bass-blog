@@ -60,6 +60,10 @@ div.paperSheet {
     grid-column: start / end;
 }
 
+#blogPostContainer img {
+    max-width: 100%;
+}
+
 h2,
 p {
     margin-bottom: 0.5rem;
