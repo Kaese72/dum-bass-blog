@@ -63,4 +63,6 @@ What I am mostly interested in is the `Top pages`, which shows me what users are
 
 ![statistics](resources/statistics.jpg "Statistics")
 
+Now we wait, and let the data flow in.
+
 //Calle

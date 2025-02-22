@@ -85,10 +85,7 @@ def main(destination_folder: str, substitutions: dict[str, str]) -> None:
         markdown_folder (str): The name of the folder containing markdown files.
         destination_folder (str): The name of the folder to save the built blogs.
     """
-    try:
-        os.mkdir(destination_folder)
-    except FileExistsError:
-        pass
+    put_folder(destination_folder)
     # Read the markdown files
     with open("src/blog.template.html", "r", encoding="utf-8") as file:
         blog_template = file.read()
@@ -98,26 +95,15 @@ def main(destination_folder: str, substitutions: dict[str, str]) -> None:
         for blog in json.load(file):
             blogs.append(BlogDefinition(**blog))
 
-    substitute_and_write(
-        page=render_front_page(blogs[0], blog_template),
-        substitutions=substitutions,
-        destination=f"{destination_folder}/index.html",
-    )
-
-    substitute_and_write(
-        page=render_blog_list_page(blogs, blog_template),
-        substitutions=substitutions,
-        destination=f"{destination_folder}/bloglist.html",
-    )
-
     for blog in blogs:
         put_folder(f"{destination_folder}/{blog.folder}")
         try:
             resources = os.listdir(f"{blog.folder}/resources")
-            put_folder(f"{destination_folder}/{blog.folder}/resources")
         except FileNotFoundError:
+            # If there are no resources there is nothing to do
             pass
         else:
+            put_folder(f"{destination_folder}/{blog.folder}/resources")
             for resource_file in resources:
                 shutil.copy(
                     f"{blog.folder}/resources/{resource_file}",
@@ -128,6 +114,29 @@ def main(destination_folder: str, substitutions: dict[str, str]) -> None:
             substitutions=substitutions,
             destination=f"{destination_folder}/{blog.folder}/index.html",
         )
+
+    substitute_and_write(
+        page=render_front_page(blogs[0], blog_template),
+        substitutions=substitutions,
+        destination=f"{destination_folder}/index.html",
+    )
+    # For resources on the front page to work
+    try:
+        # delete symlink if it exists. Mostlry used for local development
+        os.unlink(f"{destination_folder}/resources")
+    except FileNotFoundError:
+        pass
+    os.symlink(
+        f"{blogs[0].folder}/resources/",
+        f"{destination_folder}/resources",
+        target_is_directory=True,
+    )
+
+    substitute_and_write(
+        page=render_blog_list_page(blogs, blog_template),
+        substitutions=substitutions,
+        destination=f"{destination_folder}/bloglist.html",
+    )
 
 
 if __name__ == "__main__":
