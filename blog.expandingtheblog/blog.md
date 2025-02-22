@@ -9,8 +9,6 @@ I want a system where I construct the entire blog at build-time and it can then 
 initially sounded like a brilliant idea in the depths of my own mind, was to simply template everything and build it all together with a
 python script. It is what this blog is now built via, and it works pretty well, but I foresee that it will be unmaintainable if the blog grows.
 
-TODO - link to the python3 file of this commit
-
 While doing this I also created a way to copy resource folders while still letting me write the blogs in Markdown and having the preview show the right
 pictures. This measn I can now show the picture that I wanted to show in the first blog post. Here it is
 
