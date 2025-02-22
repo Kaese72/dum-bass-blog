@@ -4,13 +4,13 @@ import argparse
 import dataclasses
 import os
 import shutil
-import sys
 import time
 import markdown
 import json
 
 FRONTPAGEPLACEHOLDER = "###FRONTPAGEPLACEHOLDER###"
 NAVLISTPLACEHOLDER = "###NAVLISTPLACEHOLDER###"
+COMMIT_PLACEHOLDER = "###COMMIT_PLACEHOLDER###"
 
 
 @dataclasses.dataclass
@@ -60,7 +60,25 @@ def render_blog_page(blog: BlogDefinition, blog_template: str) -> str:
     )
 
 
-def main(destination_folder: str) -> None:
+def substitute_and_write(
+    page: str,
+    substitutions: dict[str, str],
+    destination: str,
+) -> None:
+    for key, value in substitutions.items():
+        page = page.replace(key, value)
+    with open(destination, "w", encoding="utf-8") as file:
+        file.write(page)
+
+
+def put_folder(folder: str) -> None:
+    try:
+        os.mkdir(folder)
+    except FileExistsError:
+        pass
+
+
+def main(destination_folder: str, substitutions: dict[str, str]) -> None:
     """Build markdown blogs from a directory of markdown files.
 
     Args:
@@ -80,23 +98,23 @@ def main(destination_folder: str) -> None:
         for blog in json.load(file):
             blogs.append(BlogDefinition(**blog))
 
-    with open(f"{destination_folder}/index.html", "w", encoding="utf-8") as file:
-        file.write(render_front_page(blogs[0], blog_template))
+    substitute_and_write(
+        page=render_front_page(blogs[0], blog_template),
+        substitutions=substitutions,
+        destination=f"{destination_folder}/index.html",
+    )
 
-    with open(f"{destination_folder}/bloglist.html", "w", encoding="utf-8") as file:
-        file.write(render_blog_list_page(blogs, blog_template))
+    substitute_and_write(
+        page=render_blog_list_page(blogs, blog_template),
+        substitutions=substitutions,
+        destination=f"{destination_folder}/bloglist.html",
+    )
 
     for blog in blogs:
-        try:
-            os.mkdir(f"{destination_folder}/{blog.folder}")
-        except FileExistsError:
-            pass
+        put_folder(f"{destination_folder}/{blog.folder}")
         try:
             resources = os.listdir(f"{blog.folder}/resources")
-            try:
-                os.mkdir(f"{destination_folder}/{blog.folder}/resources/")
-            except FileExistsError:
-                pass
+            put_folder(f"{destination_folder}/{blog.folder}/resources")
         except FileNotFoundError:
             pass
         else:
@@ -105,16 +123,21 @@ def main(destination_folder: str) -> None:
                     f"{blog.folder}/resources/{resource_file}",
                     f"{destination_folder}/{blog.folder}/resources/{resource_file}",
                 )
-        with open(
-            f"{destination_folder}/{blog.folder}/index.html", "w", encoding="utf-8"
-        ) as file:
-            file.write(render_blog_page(blog, blog_template))
+        substitute_and_write(
+            page=render_blog_page(blog, blog_template),
+            substitutions=substitutions,
+            destination=f"{destination_folder}/{blog.folder}/index.html",
+        )
 
 
 if __name__ == "__main__":
     before = time.time()
     PARSER = argparse.ArgumentParser(description="Build dynamic root.")
     PARSER.add_argument("--output-dir", type=str, default="root")
+    PARSER.add_argument("--commit", type=str, default="yeetusgititus")
     ARGS = PARSER.parse_args()
-    main(ARGS.output_dir)
+    main(
+        destination_folder=ARGS.output_dir,
+        substitutions={COMMIT_PLACEHOLDER: ARGS.commit},
+    )
     print(f"Built in {time.time() - before:.2f} seconds. Finished at {time.ctime()}")
