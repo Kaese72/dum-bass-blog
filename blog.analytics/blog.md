@@ -28,15 +28,14 @@ feels like inviting a future supply chain vulnerability. Sure, the script is hos
 Microsoft servers but it would just feel better if the source of that and the analytics engine itself was
 controlled by me. For reference, the included script looks like this
 
-```
-<script type="text/javascript">
-   (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-   })(window, document, "clarity", "script", "qdtu3rytca");
-</script>
-```
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "qdtu3rytca");
+    </script>
+
 
 After taking a quick look at the source code for the script I now pull in dynamicall, I was reminded of my ineptitude with 
 Javascript, but based on the functionality it provides it effectively must overlay my entire site, send information to Microsoft
