@@ -27,6 +27,7 @@ header>div.paperSheet {
 }
 
 div.blogPicture {
+    margin-top: 10px;
     grid-column: start / introStart;
 }
 
@@ -35,10 +36,9 @@ div.blogIntro {
 }
 
 div.blogReferences {
+    margin-top: 10px;
     grid-column: refStart / end;
-    border: 3px;
-    border-color: black;
-    border-style: dotted;
+    border: 10px;
 }
 
 .blogReferences img {
