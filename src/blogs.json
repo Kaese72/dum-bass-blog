@@ -1,10 +1,14 @@
 [
     {
-        "title": "Building the blog",
-        "folder": "blog.buildingtheblog"
+        "title": "Analytics for the blog",
+        "folder": "blog.analytics"
     },
     {
         "title": "Expanding the blog",
         "folder": "blog.expandingtheblog"
+    },
+    {
+        "title": "Building the blog",
+        "folder": "blog.buildingtheblog"
     }
 ]
