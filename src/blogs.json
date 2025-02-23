@@ -1,14 +1,20 @@
 [
     {
         "title": "Analytics for the blog",
-        "folder": "blog.analytics"
+        "folder": "blog.analytics",
+        "description": "Adding analytics to the blog",
+        "created": "2025-02-23"
     },
     {
         "title": "Expanding the blog",
-        "folder": "blog.expandingtheblog"
+        "folder": "blog.expandingtheblog",
+        "description": "Expanding the blog with some more features",
+        "created": "2025-02-22"
     },
     {
         "title": "Building the blog",
-        "folder": "blog.buildingtheblog"
+        "folder": "blog.buildingtheblog",
+        "description": "Build the blog from scratch",
+        "created": "2024-08-24"
     }
 ]

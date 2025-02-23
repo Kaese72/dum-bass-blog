@@ -2,11 +2,13 @@
 
 import argparse
 import dataclasses
+import datetime
 import os
+import json
 import shutil
 import time
 import markdown
-import json
+import PyRSS2Gen
 
 FRONTPAGEPLACEHOLDER = "###FRONTPAGEPLACEHOLDER###"
 NAVLISTPLACEHOLDER = "###NAVLISTPLACEHOLDER###"
@@ -15,8 +17,35 @@ COMMIT_PLACEHOLDER = "###COMMIT_PLACEHOLDER###"
 
 @dataclasses.dataclass
 class BlogDefinition:
+    """A class to represent a blog definition."""
+
     title: str
+    description: str
     folder: str
+    created: datetime.date
+
+    @staticmethod
+    def parse(blog_dict: dict) -> "BlogDefinition":
+        """Create a BlogDefinition from a dictionary."""
+        return BlogDefinition(
+            title=blog_dict["title"],
+            description=blog_dict["description"],
+            folder=blog_dict["folder"],
+            created=datetime.datetime.strptime(blog_dict["created"], "%Y-%m-%d").date(),
+        )
+
+    def rss_item(self, base_url: str) -> str:
+        """
+        Create an RSS item from the blog definition.
+        Requires a base URL since we do not want to use relative links...
+        """
+        return PyRSS2Gen.RSSItem(
+            title=self.title,
+            link=f"{base_url}{self.folder}",
+            description=self.description,
+            guid=PyRSS2Gen.Guid(f"{base_url}{self.folder}"),
+            pubDate=str(self.created),
+        )
 
 
 def construct_navigation_list(nav_items: list[tuple[str, str]]) -> str:
@@ -78,7 +107,7 @@ def put_folder(folder: str) -> None:
         pass
 
 
-def main(destination_folder: str, substitutions: dict[str, str]) -> None:
+def main(destination_folder: str, substitutions: dict[str, str], base_url: str) -> None:
     """Build markdown blogs from a directory of markdown files.
 
     Args:
@@ -91,9 +120,7 @@ def main(destination_folder: str, substitutions: dict[str, str]) -> None:
         blog_template = file.read()
 
     with open("src/blogs.json", "r", encoding="utf-8") as file:
-        blogs: list[BlogDefinition] = []
-        for blog in json.load(file):
-            blogs.append(BlogDefinition(**blog))
+        blogs = [BlogDefinition.parse(b) for b in json.load(file)]
 
     for blog in blogs:
         put_folder(f"{destination_folder}/{blog.folder}")
@@ -138,15 +165,29 @@ def main(destination_folder: str, substitutions: dict[str, str]) -> None:
         destination=f"{destination_folder}/bloglist.html",
     )
 
+    with open(f"{destination_folder}/rss.xml", "w", encoding="utf-8") as file:
+        rss = PyRSS2Gen.RSS2(
+            title="Blog",
+            link=base_url,
+            description="RSS feed for the blog",
+            lastBuildDate=datetime.datetime.now(),
+            items=[b.rss_item(base_url) for b in blogs],
+            docs=base_url,
+        )
+        rss.write_xml(file)
+
 
 if __name__ == "__main__":
     before = time.time()
     PARSER = argparse.ArgumentParser(description="Build dynamic root.")
     PARSER.add_argument("--output-dir", type=str, default="root")
     PARSER.add_argument("--commit", type=str, default="yeetusgititus")
+    PARSER.add_argument("--base-url", type=str, default="https://blog.kaese.space/")
     ARGS = PARSER.parse_args()
+    assert ARGS.base_url.endswith("/"), "must end url with / for rss feed to work"
     main(
         destination_folder=ARGS.output_dir,
         substitutions={COMMIT_PLACEHOLDER: ARGS.commit},
+        base_url=ARGS.base_url,
     )
     print(f"Built in {time.time() - before:.2f} seconds. Finished at {time.ctime()}")
