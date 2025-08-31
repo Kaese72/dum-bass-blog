@@ -44,7 +44,7 @@ both about the users themselves but also the contents of the site.
 So I logged on to Microsoft Clarity after a while, because apparently it takes a while for them too bootstrap the analytics, and
 I am presented with a page that confirms what I already know,
 
-![clarity](resources/clarity.jpg "Clarity!")
+![clarity](clarity.jpg "Clarity!")
 
 It only shows the two sessions, both are mine from trying out the analytics. I think its pretty cool. I did 
 encounter some interesting challenges. In no particular order,
@@ -56,11 +56,11 @@ encounter some interesting challenges. In no particular order,
 But data is flowing in, even though it's pretty limited. Me, myself, and I. The heatmap is pretty cool, but 
 not very useful to me at the moment.
 
-![heatmap](resources/heatmaps.jpg "Heatmap!")
+![heatmap](heatmaps.jpg "Heatmap!")
 
 What I am mostly interested in is the `Top pages`, which shows me what users are visiting.
 
-![statistics](resources/statistics.jpg "Statistics")
+![statistics](statistics.jpg "Statistics")
 
 Now we wait, and let the data flow in.
 

@@ -12,11 +12,11 @@ python script. It is what this blog is now built via, and it works pretty well, 
 While doing this I also created a way to copy resource folders while still letting me write the blogs in Markdown and having the preview show the right
 pictures. This measn I can now show the picture that I wanted to show in the first blog post. Here it is
 
-![the first image](resources/seconditeration.png "The first image!")
+![the first image](seconditeration.png "The first image!")
 
 I dont remember why I wanted to show this... but I had it saved so there you go. The first time I included this picture it showed up like this... CSS is awesome!
 
-![css is awesome](resources/cssisawesome.jpg "CSS is awesome")
+![css is awesome](cssisawesome.jpg "CSS is awesome")
 
 
 

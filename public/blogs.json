@@ -1,0 +1,30 @@
+[
+    {
+        "title": "Building the blog",
+        "folder": "blog.buildingtheblog",
+        "description": "Build the blog from scratch",
+        "created": "2024-08-24",
+        "series": "Building the Blog"
+    },
+    {
+        "title": "Expanding the blog",
+        "folder": "blog.expandingtheblog",
+        "description": "Expanding the blog with some more features",
+        "created": "2025-02-22",
+        "series": "Building the Blog"
+    },
+    {
+        "title": "Analytics for the blog",
+        "folder": "blog.analytics",
+        "description": "Adding analytics to the blog",
+        "created": "2025-02-23",
+        "series": "Building the Blog"
+    },
+    {
+        "title": "Vibe code for the blog",
+        "folder": "blog.vibing",
+        "description": "Adding vibe code to the blog",
+        "created": "2025-08-31",
+        "series": "Building the Blog"
+    }
+]
