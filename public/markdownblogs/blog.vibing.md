@@ -1,5 +1,3 @@
-# Vibe coding the blog
-
 I have come to a horrible realization. UI development sucks... To be fair, the problem 
 likely resides with me rather than the profession as a whole, because I find UI development
 tedious, frustrating, but still incredibly rewarning in the end when I can genuinly see

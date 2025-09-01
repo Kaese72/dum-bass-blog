@@ -1,5 +1,3 @@
-# Analytics, dear Watson!
-
 Let's set the scene... It's 9 o' clock in the morning on a Saturday. I'm sitting in front of the computer, watching
 a one year old episode of [Kill Tony with Shane Gillis](https://www.youtube.com/watch?v=XnlmpnfpwoY) while doing some
 recreational programming on a [side project](https://github.com/Kaese72/asset-registry). I get a sudden thought that

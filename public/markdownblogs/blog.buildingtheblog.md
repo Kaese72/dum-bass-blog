@@ -1,5 +1,3 @@
-# Building the blog
-
 I have a lot of stupid ideas... I like to think about them as misunderstood pieces of art, not because they have
 any particular value, but because my they are a way for me to express myself and entertain the people around me.
 

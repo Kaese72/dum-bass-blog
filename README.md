@@ -18,3 +18,11 @@ Honestly I just want to write some HTML and publish it for laughs. Now here we a
 | PICTURE |                      |
 | PICTURE | MENU MENU MENU LINKS |
 ----------------------------------
+
+### Blog header
+
+----------------------------------------
+| LINK   TITLE TITLE TITLE        LINK |
+|        TITLE TITLE TITLE             |
+|        CREATED                       |
+----------------------------------------

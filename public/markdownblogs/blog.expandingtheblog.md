@@ -1,5 +1,3 @@
-# Expanding the blog
-
 Its been months and the blog looks like crap yet it still has a valid certificate, so I am pretty happy with my efforts.
 A few things are still tickling my brain though... I can not include pictures, blog posts are dynamically loaded in via some javascript,
 and I only have one blog post. Lets see if we can fix all of that
