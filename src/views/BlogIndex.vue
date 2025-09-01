@@ -2,8 +2,8 @@
   <div class="a4-paper">
     <h2>All Blog Posts</h2>
     <ul>
-      <li v-for="blog in blogs" :key="blog.folder">
-        <router-link :to="`/blogs/${blog.folder}/`">{{ blog.title }}</router-link>
+      <li v-for="blogFolder in blogs.index" :key="blogFolder">
+        <router-link :to="`/blogs/${blogFolder}`">{{ blogs.blogs[blogFolder].title }}</router-link>
       </li>
     </ul>
   </div>

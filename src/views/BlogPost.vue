@@ -21,7 +21,7 @@ onMounted(async () => {
     // Fetch blogs.json to get folder and title
     const blogsRes = await fetch('/blogs.json');
     const blogs = await blogsRes.json();
-    const blog = blogs.find(b => b.folder === route.params.folder);
+    const blog = blogs.blogs[route.params.folder];
     if (!blog) {
       blogTitle.value = 'Post not found';
       blogHtml.value = '';
@@ -30,7 +30,7 @@ onMounted(async () => {
     }
     blogTitle.value = blog.title;
     // Fetch the markdown file
-    const mdRes = await fetch(`/blogs/${blog.folder}/blog.md`);
+    const mdRes = await fetch(`/markdownblogs/${route.params.folder}.md`);
     const mdText = await mdRes.text();
     const md = new MarkdownIt();
     blogHtml.value = md.render(mdText);
